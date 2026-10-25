@@ -1,4 +1,4 @@
-SET(GIT_SHA1 0)
+SET(GIT_SHA1 2dac4c708c1b20b08966f0246749e9dab984e174) #frozen upstream commit (QcmPlab/SciFortran), used when no .git is found
 SET(GIT_BRANCH "master")
 SET(GIT_TAG ${VERSION})
 IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)

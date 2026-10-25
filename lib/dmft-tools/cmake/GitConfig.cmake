@@ -1,4 +1,4 @@
-SET(GIT_SHA1 0)
+SET(GIT_SHA1 cdd97aa45223167e4235890dc38ecbc11095eafa) #frozen upstream commit (QcmPlab/DMFTtools), used when no .git is found
 SET(GIT_BRANCH "master")
 SET(GIT_TAG ${VERSION})
 IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
