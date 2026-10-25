@@ -7,7 +7,7 @@ program cdn_hm_2dsquare
   USE MPI
   !
   implicit none
-  integer                                                                :: Nsym,Nx,Ny,Nso,Nlo,Nlso,iloop,Nb,Nkx,Nky,ilat,jlat,irepl,iw,iii,jjj,kkk,Ntr
+  integer                                                                :: Nsym,Nx,Ny,Nso,Nlo,Nlso,iloop,Nb,Nkx,Nky,ilat,jlat,ispin,irepl,iw,iii,jjj,kkk,Ntr
   logical                                                                :: converged
   real(8)                                                                :: ts,wmixing,delta,dens_average,onsite
   real(8),allocatable,dimension(:)                                       :: dens_mats
@@ -117,8 +117,8 @@ program cdn_hm_2dsquare
   bath_prev=zero
   call ed_init_solver(comm,bath)
 
-  print*,bath
-  
+  if(master)print*,bath
+
   !DMFT loop
   iloop=0;converged=.false.
   do while(.not.converged.AND.iloop<nloop)
@@ -183,9 +183,11 @@ program cdn_hm_2dsquare
         dens_mats = zero
         do ilat=1,Nlat
            !tot_density = density(up) + density(dw)
-           dens_mats(ilat) = dens_mats(ilat) + fft_get_density(Gmats(ilat,ilat,1,1,1,1,:),beta)
-           dens_mats(ilat) = dens_mats(ilat) + fft_get_density(Gmats(ilat,ilat,2,2,1,1,:),beta)
+           do ispin=1,Nspin
+              dens_mats(ilat) = dens_mats(ilat) + fft_get_density(Gmats(ilat,ilat,ispin,ispin,1,1,:),beta)
+           enddo
         enddo
+        if(Nspin==1)dens_mats = 2d0*dens_mats !spin-degenerate: density(dw) = density(up)
         dens_average = sum(dens_mats)/Nlat
         write(LOGfile,*)" "
         write(LOGfile,*)"Average FFT-density:", dens_average
