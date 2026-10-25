@@ -1,6 +1,9 @@
 # [SciFortran](https://github.com/QcmPlab/SciFortran)
 This is a unitary collection of fortran modules and procedures for scientific calculations. The library aims to provide a simple and generic environment for any scientific or mathematic computations. The project is largely inspired by *SciPy* for Python and tries to closely follow its guidelines and naming convention. 
 
+There are large areas that are still not covered.  
+Anyone is welcome to contribute or to test the software. 
+
 ### Dependencies
 
 * [GNU Fortran (`gfortran`)](https://gcc.gnu.org/fortran/) > 5.0 **OR** [Intel Fortran Compiler Classic (`ifort`)](https://www.intel.com/content/www/us/en/developer/tools/oneapi/fortran-compiler.html)  > 13.0

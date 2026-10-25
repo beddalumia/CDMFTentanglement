@@ -1,6 +1,6 @@
 module GLOC_MATSUBARA
   USE DMFT_CTRL_VARS  
-  USE GF_COMMON
+  USE LEGACY_GF_COMMON
   implicit none
   private
 
@@ -370,6 +370,7 @@ contains
 #endif
     if(mpi_master)call stop_timer
   end subroutine dmft_get_gloc_matsubara_normal_dos
+
 
 
 
@@ -756,6 +757,7 @@ contains
     call assert_shape(Smats,[2,Nspin,Nspin,Norb,Norb,Lmats],'dmft_get_gloc_matsubara_superc_main_mpi',"Smats")
     call assert_shape(Gmats,[2,Nspin,Nspin,Norb,Norb,Lmats],'dmft_get_gloc_matsubara_superc_main_mpi',"Gmats")
     !
+    allocate(Gkmats(2,Nspin,Nspin,Norb,Norb,Lmats))
     allocate(zeta_mats(2,2,Nso,Nso,Lmats))
     if(allocated(wm))deallocate(wm);allocate(wm(Lmats))
     wm = pi/beta*(2*arange(1,Lmats)-1)
@@ -763,7 +765,7 @@ contains
     do i=1,Lmats
        zeta_mats(1,1,:,:,i) = (xi*wm(i)+xmu)*eye(Nso) -        nn2so_reshape(Smats(1,:,:,:,:,i),Nspin,Norb)
        zeta_mats(1,2,:,:,i) =                         -        nn2so_reshape(Smats(2,:,:,:,:,i),Nspin,Norb)
-       zeta_mats(2,1,:,:,i) =                         -        nn2so_reshape(Smats(2,:,:,:,:,i),Nspin,Norb)
+       zeta_mats(2,1,:,:,i) =                         - conjg( nn2so_reshape(Smats(2,:,:,:,:,i),Nspin,Norb) )
        zeta_mats(2,2,:,:,i) = (xi*wm(i)-xmu)*eye(Nso) + conjg( nn2so_reshape(Smats(1,:,:,:,:,i),Nspin,Norb) )
     enddo
     !
@@ -1123,16 +1125,6 @@ contains
     end if
     if(mpi_master)call stop_timer
   end subroutine dmft_get_gloc_matsubara_superc_gij
-
-
-
-
-
-
-
-
-
-
 
 
 

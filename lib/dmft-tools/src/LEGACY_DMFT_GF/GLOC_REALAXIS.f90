@@ -1,6 +1,6 @@
 module GLOC_REALAXIS
   USE DMFT_CTRL_VARS  
-  USE GF_COMMON
+  USE LEGACY_GF_COMMON
   implicit none
   private
 

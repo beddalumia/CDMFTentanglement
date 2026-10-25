@@ -1,6 +1,6 @@
 # Cluster-DMFT Lanczos Exact Diagonalization
 
-A Lanczos based solver for the Cluster Dynamical Mean-Field Theory using the `N_up:N_dw` implementation in the normal phase (plus long-range magnetic or charge order).  
+A Lanczos based solver for the **Cluster** Dynamical Mean-Field Theory using the `N_up:N_dw` implementation in the normal phase (plus long-range magnetic or charge order).  
 
 The code is based on two external liberies:  
 
