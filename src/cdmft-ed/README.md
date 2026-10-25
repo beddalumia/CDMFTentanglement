@@ -32,7 +32,7 @@ make
 --
 
 ***COPYRIGHT and FAIR USAGE***  
-© 2024 Adriano Amaricci, Lorenzo Crippa, Gabriele Bellomia, Samuele Giuli, Massimo Capone.  
+© 2026 Adriano Amaricci, Lorenzo Crippa, Gabriele Bellomia, Samuele Giuli, Massimo Capone.  
 All rights reserved. 
 
 The software is provided with no license, as such it is protected by copyright. The software is provided as it is and can be read and copied, in agreement with the Terms of Service of GITHUB. 
