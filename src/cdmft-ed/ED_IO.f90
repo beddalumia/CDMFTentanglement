@@ -549,12 +549,12 @@ contains
    !                      READ DENSITY MATRICES
    !+------------------------------------------------------------------+
    subroutine ed_read_dm(fname,Nrdm,dm)
-      character(len=64),intent(in)          :: fname
+      character(len=*),intent(in)           :: fname
       integer,intent(in)                    :: Nrdm
       complex(8),dimension(:,:),allocatable,intent(out) :: dm
       !
       real(8),dimension(:,:),allocatable    :: real_dm, imag_dm
-      integer                               :: unit
+      integer                               :: unit,ierr
       integer                               :: io,jo
       !
       if(allocated(real_dm))deallocate(real_dm)
@@ -572,10 +572,17 @@ contains
       enddo
       read(unit,*)
       !
-      do io=1,Nrdm
-         read(unit,"(*(F20.16,1X))") (imag_dm(io,jo),jo=1,Nrdm)
-      enddo
-      read(unit,*)
+      !The imaginary block is written only if nonzero (cfr. ed_print_dm)
+      read(unit,"(*(F20.16,1X))",iostat=ierr) (imag_dm(1,jo),jo=1,Nrdm)
+      if(ierr==0)then
+         do io=2,Nrdm
+            read(unit,"(*(F20.16,1X))") (imag_dm(io,jo),jo=1,Nrdm)
+         enddo
+      elseif(is_iostat_end(ierr))then
+         imag_dm = 0d0
+      else
+         stop "ERROR: ed_read_dm cannot read the imaginary part of the density matrix"
+      endif
       !
       close(unit)
       !
